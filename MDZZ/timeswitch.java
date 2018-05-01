@@ -16,6 +16,7 @@ public class timeswitch {
 		System.out.println(a + " hours");
 		System.out.println(b + " minutes");
 		System.out.println(c + " seconds");
+		//¸Ä¶¯²âÊÔ01
 	}
 
 }
