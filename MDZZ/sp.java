@@ -136,7 +136,7 @@ public class sp {
 			case 1:addData();break;
 			case 2:deleteData();break;
 			case 3:searchData();break;
-			case 4:modifyData();break;
+			case 4:updateData();break;
 			case 5:login();break;
 			default:
 			{
@@ -652,19 +652,69 @@ public class sp {
 			Operate();
 		}
 	}
-	public void modifyData() throws SQLException
+	public void updateData() throws SQLException
 	{
 		try
 		{
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
+			int n = 0;
+			System.out.println("请输入想要查看的表格  1.零件表  2.供应商表  3.供应货物表  ：");
+			n = sc.nextInt();
+			while(n != 1 && n != 2 && n != 3)
+			{
+				System.out.println("输入无效数字，请重新输入。");
+				updateData();
+			}
+			switch(n)
+			{
+			case 1:
+			{
+				try
+				{
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("修改失败（1），返回上一层。");
+					updateData();
+				}
+			}
+			case 2:
+			{
+				try
+				{
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("修改失败（2），返回上一层。");
+					updateData();
+				}
+			}
+			case 3:
+			{
+				try
+				{
+					
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("修改失败（3），返回上一层。");
+					updateData();
+				}
+			}
+			}
+			
 			connect.close();
-			PreparedStatement pst;
-			pst = connect.prepareStatement("");
-			pst.close();
 		}
 		catch(Exception e)
 		{
-			
+			e.printStackTrace();
+			System.out.println("修改失败（0），返回上一层。");
+			Operate();
 		}
 	}
 }
