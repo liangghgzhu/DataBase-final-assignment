@@ -614,16 +614,15 @@ public class sp {
 				try
 				{
 					Statement statement = connect.createStatement();
-					ResultSet result = statement.executeQuery("SELECT * FROM S");
+					ResultSet result = statement.executeQuery("SELECT * FROM SP");
 					System.out.println("---------------------------");
-					System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+					System.out.println("SNO  PNO  QTY");
 					System.out.println("---------------------------");
 					while(result.next())
 					{
 					    System.out.print(result.getString("SNO")+"   ");
-					    System.out.print(result.getString("SNAME")+"     ");
-					    System.out.print(result.getString("CITY")+"    ");
-					    System.out.println(result.getString("STATUS"));
+					    System.out.print(result.getString("PNO")+"     ");
+					    System.out.println(result.getFloat("QTY"));
 					}
 					System.out.println("---------------------------");
 					result.close();
@@ -657,6 +656,7 @@ public class sp {
 		try
 		{
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
+			PreparedStatement pst;
 			int n = 0;
 			System.out.println("请输入想要查看的表格  1.零件表  2.供应商表  3.供应货物表  ：");
 			n = sc.nextInt();
@@ -671,7 +671,81 @@ public class sp {
 			{
 				try
 				{
-					
+					int m = 0;
+					String SNO,PNO;
+					float QTY;
+					System.out.println("请输入要更改的列  1.供应商编号  2.零件编号：3.零件数量：");
+					m = sc.nextInt();
+					if( m == 1)
+					{
+						int b = 0;
+						System.out.println("根据1.零件编号  2.零件数量 进行修改：");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE SP SET SNO = ? WHERE PNO = ?");
+							System.out.println("零件编号定位：");
+							PNO = sc.next();
+							System.out.println("希望供应商编号修改为：");
+							SNO = sc.next();
+							pst.setString(1, SNO);
+							pst.setString(2, PNO);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM SP");
+							System.out.println("---------------------------");
+							System.out.println("SNO  PNO  QTY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("SNO")+"   ");
+							    System.out.print(result.getString("PNO")+"     ");
+							    System.out.println(result.getFloat("QTY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
+						else
+						{
+							pst = connect.prepareStatement("UPDATE SP SET SNO = ? WHERE QTY = ?");
+							System.out.println("零件数量定位：");
+							QTY = sc.nextFloat();
+							System.out.println("希望供应商编号修改为：");
+							SNO = sc.next();
+							pst.setString(1, SNO);
+							pst.setFloat(2, QTY);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
+					}
+					if(m == 2)
+					{
+						
+					}
+					if(m == 3)
+					{
+						
+					}
 				}
 				catch(Exception e)
 				{
@@ -707,7 +781,6 @@ public class sp {
 				}
 			}
 			}
-			
 			connect.close();
 		}
 		catch(Exception e)
