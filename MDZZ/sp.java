@@ -547,15 +547,109 @@ public class sp {
 		try
 		{
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
-			PreparedStatement pst;
-			pst = connect.prepareStatement("");
-			connect.close();
-			pst.close();
-			
+			int n = 0;
+			System.out.println("请输入想要查看的表格  1.零件表  2.供应商表  3.供应货物表  ：");
+			n = sc.nextInt();
+			switch(n)
+			{
+			case 1:
+			{
+				try
+				{
+					Statement statement = connect.createStatement();
+					ResultSet result = statement.executeQuery("SELECT * FROM P");
+					System.out.println("---------------------------");
+					System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+					System.out.println("---------------------------");
+					while(result.next())
+					{
+					    System.out.print(result.getString("PNO")+"   ");
+					    System.out.print(result.getString("PNAME")+"     ");
+					    System.out.print(result.getFloat("WEIGHT")+"    ");
+					    System.out.print(result.getString("COLOR")+"     ");
+					    System.out.println(result.getString("CITY"));
+					}
+					System.out.println("---------------------------");
+					result.close();
+					Operate();
+					break;
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("查询失败（1），返回上一层。");
+					searchData();
+				}
+			}
+			case 2:
+			{
+				try
+				{
+					Statement statement = connect.createStatement();
+					ResultSet result = statement.executeQuery("SELECT * FROM S");
+					System.out.println("---------------------------");
+					System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+					System.out.println("---------------------------");
+					while(result.next())
+					{
+					    System.out.print(result.getString("SNO")+"   ");
+					    System.out.print(result.getString("SNAME")+"     ");
+					    System.out.print(result.getString("CITY")+"    ");
+					    System.out.println(result.getString("STATUS"));
+					}
+					System.out.println("---------------------------");
+					result.close();
+					Operate();
+					break;
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("查询失败（2），返回上一层。");
+					searchData();
+				}
+			}
+			case 3:
+			{
+				try
+				{
+					Statement statement = connect.createStatement();
+					ResultSet result = statement.executeQuery("SELECT * FROM S");
+					System.out.println("---------------------------");
+					System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+					System.out.println("---------------------------");
+					while(result.next())
+					{
+					    System.out.print(result.getString("SNO")+"   ");
+					    System.out.print(result.getString("SNAME")+"     ");
+					    System.out.print(result.getString("CITY")+"    ");
+					    System.out.println(result.getString("STATUS"));
+					}
+					System.out.println("---------------------------");
+					result.close();
+					Operate();
+					break;
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("查询失败（3），返回上一层。");
+					searchData();
+				}
+			}
+				default:
+				{
+					System.out.println("输入错误请重新输入。");
+					searchData();
+				}
+			}
+			connect.close();		
 		}
 		catch(Exception e)
 		{
-			
+			e.printStackTrace();
+			System.out.println("操作失败（6），自动返回上一层。");
+			Operate();
 		}
 	}
 	public void modifyData() throws SQLException
