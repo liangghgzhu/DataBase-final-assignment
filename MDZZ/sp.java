@@ -290,7 +290,7 @@ public class sp {
 					{
 					    System.out.print(result.getString("SNO")+"   ");
 					    System.out.print(result.getString("PNO")+"     ");
-					    System.out.println(result.getString("QTY"));
+					    System.out.println(result.getFloat("QTY"));
 					}
 					System.out.println("---------------------------");
 					result.close();
@@ -326,7 +326,7 @@ public class sp {
 		{
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
 			PreparedStatement pst;
-			System.out.println("请选择你需要删除数据的表1.零件表  2.供应商表  3.供应货物表：");
+			System.out.println("请选择你需要删除数据的表1.零件表  2.供应商表  3.供应货物表  4.返回上层：");
 			int n = sc.nextInt();
 			while(n != 1 && n != 2 && n != 3 && n != 4)
 			{
@@ -339,15 +339,54 @@ public class sp {
 			{
 				try
 				{
-					pst = connect.prepareStatement("DELETE FROM P WHERE ? = ?");
-					String n1, n2;
-					System.out.print("第一条项目：");
-					n1 = sc.next();
-					System.out.print("第二条项目：");
-					n2 = sc.next();
-					pst.setString(1, n1);
-					pst.setString(2, n2);
-					pst.executeUpdate();
+					int m = 0;
+					System.out.println("请输入想要操作的列  1.零件编号  2.零件名称  3.零件重量  4.零件颜色  5.零件所属城市 ：");
+					m = sc.nextInt();
+					if(m == 1)
+					{
+						pst = connect.prepareStatement("DELETE FROM P WHERE PNO = ?");
+						String n1;
+						System.out.print("PNO = ");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 2)
+					{
+						pst = connect.prepareStatement("DELETE FROM P WHERE PNAME = ?");
+						String n1;
+						System.out.print("PNAME = ");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 3)
+					{
+						pst = connect.prepareStatement("DELETE FROM P WHERE WEIGHT = ?");
+						float n1;
+						System.out.print("WEIGHT = ");
+						n1 = sc.nextFloat();
+						pst.setFloat(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 4)
+					{
+						pst = connect.prepareStatement("DELETE FROM P WHERE COLOR = ?");
+						String n1;
+						System.out.print("COLOR:");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 5)
+					{
+						pst = connect.prepareStatement("DELETE FROM P WHERE CITY = ?");
+						String n1;
+						System.out.print("CITY:");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
 					System.out.println("删除成功，删除后表格数据如下：");
 					Statement statement = connect.createStatement();
 					ResultSet result = statement.executeQuery("SELECT * FROM P");
@@ -364,7 +403,6 @@ public class sp {
 					}
 					System.out.println("---------------------------");
 					result.close();
-					pst.close();
 					Operate();
 					break;
 				}
@@ -375,12 +413,127 @@ public class sp {
 				}
 			}
 			case 2:
-			case 3:
-			case 4:
+			{
+				try
+				{
+					int m = 0;
+					System.out.println("请输入想要操作的列  1.供应商编号  2.供应商名  3.供应商所属城市：");
+					m = sc.nextInt();
+					if(m == 1)
+					{
+						pst = connect.prepareStatement("DELETE FROM S WHERE SNO = ?");
+						String n1;
+						System.out.print("SNO = ");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 2)
+					{
+						pst = connect.prepareStatement("DELETE FROM S WHERE SNAME = ?");
+						String n1;
+						System.out.print("SNAME = ");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 3)
+					{
+						pst = connect.prepareStatement("DELETE FROM S WHERE CITY = ?");
+						String n1;
+						System.out.print("CITY = ");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					System.out.println("删除成功，删除后表格数据如下：");
+					Statement statement = connect.createStatement();
+					ResultSet result = statement.executeQuery("SELECT * FROM S");
+					System.out.println("---------------------------");
+					System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+					System.out.println("---------------------------");
+					while(result.next())
+					{
+					    System.out.print(result.getString("SNO")+"   ");
+					    System.out.print(result.getString("SNAME")+"     ");
+					    System.out.print(result.getString("CITY")+"    ");
+					    System.out.println(result.getString("STATUS"));
+					}
+					System.out.println("---------------------------");
+					result.close();
+					Operate();
+					break;
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("删除失败（2）");
+				}
 			}
-			pst = connect.prepareStatement("");
+			case 3:
+			{
+				try
+				{
+					int m = 0;
+					System.out.println("请输入想要操作的列  1.供应商编号  2.零件编号  3.零件数量 ： ");
+					m = sc.nextInt();
+					if(m == 1)
+					{
+						pst = connect.prepareStatement("DELETE FROM SP WHERE SNO = ?");
+						String n1;
+						System.out.print("SNO = ");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 2)
+					{
+						pst = connect.prepareStatement("DELETE FROM SP WHERE PNO = ?");
+						String n1;
+						System.out.print("PNO = ");
+						n1 = sc.next();
+						pst.setString(1, n1);
+						pst.executeUpdate();
+					}
+					if(m == 3)
+					{
+						pst = connect.prepareStatement("DELETE FROM SP WHERE QTY = ?");
+						float n1;
+						System.out.print("QTY = ");
+						n1 = sc.nextFloat();
+						pst.setFloat(1, n1);
+						pst.executeUpdate();
+					}
+					System.out.println("删除成功，删除后表格数据如下：");
+					Statement statement = connect.createStatement();
+					ResultSet result = statement.executeQuery("SELECT * FROM SP");
+					System.out.println("---------------------------");
+					System.out.println("SNO  PNO  QTY");
+					System.out.println("---------------------------");
+					while(result.next())
+					{
+					    System.out.print(result.getString("SNO")+"   ");
+					    System.out.print(result.getString("PNO")+"     ");
+					    System.out.println(result.getFloat("QTY"));
+					}
+					System.out.println("---------------------------");
+					result.close();
+					Operate();
+					break;
+				}
+				catch(Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("删除失败（3）");
+				}
+			}
+			case 4:
+			{
+				Operate();
+				break;
+			}
+			}
 			connect.close();
-			pst.close();
 		}
 		catch(Exception e)
 		{
