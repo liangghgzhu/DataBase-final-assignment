@@ -654,6 +654,7 @@ public class sp {
 	
 	
 	
+	@SuppressWarnings("resource")
 	public void updateData() throws SQLException
 	{
 		try
@@ -661,7 +662,7 @@ public class sp {
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
 			PreparedStatement pst;
 			int n = 0;
-			System.out.println("请输入想要修改的表  1.供应货物表  2.供应商表  3.零件表  ：");
+			System.out.println("请输入想要修改的表  1.供应货物表  2.零件表  3.供应商表  ：");
 			n = sc.nextInt();
 			while(n != 1 && n != 2 && n != 3)
 			{
@@ -834,9 +835,9 @@ public class sp {
 						else
 						{
 							pst = connect.prepareStatement("UPDATE SP SET QTY = ? WHERE PNO = ?");
-							System.out.println("零件编号定位：");
+							System.out.print("零件编号定位：");
 							PNO = sc.next();
-							System.out.println("希望零件数量修改为：");
+							System.out.print("希望零件数量修改为：");
 							QTY = sc.nextFloat();
 							pst.setFloat(1, QTY);
 							pst.setString(2, PNO);
@@ -878,23 +879,633 @@ public class sp {
 					m = sc.nextInt();
 					if(m == 1)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.零件名称  2.零件质量  3.零件颜色  4.零件所属地  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNO = ? WHERE PNAME = ?");
+							System.out.print("零件名称定位：");
+							PNAME = sc.next();
+							System.out.print("希望零件编号修改为：");
+							PNO = sc.next();
+							pst.setString(1, PNO);
+							pst.setString(2, PNAME);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNO = ? WHERE WEIGHT = ?");
+							System.out.print("零件质量定位：");
+							WEIGHT = sc.nextFloat();
+							System.out.print("希望零件编号修改为：");
+							PNO = sc.next();
+							pst.setString(1, PNO);
+							pst.setFloat(2, WEIGHT);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 3)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNO = ? WHERE COLOR = ?");
+							System.out.print("零件颜色定位：");
+							COLOR = sc.next();
+							System.out.print("希望零件编号修改为：");
+							PNO = sc.next();
+							pst.setString(1, PNO);
+							pst.setString(2, COLOR);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 4)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNO = ? WHERE CITY = ?");
+							System.out.print("零件所属地定位：");
+							CITY = sc.next();
+							System.out.print("希望零件编号修改为：");
+							PNO = sc.next();
+							pst.setString(1, PNO);
+							pst.setString(2, CITY);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
 					}
 					if(m == 2)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.零件编号  2.零件质量  3.零件颜色  4.零件所属地  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNAME = ? WHERE PNO = ?");
+							System.out.print("零件编号定位：");
+							PNO = sc.next();
+							System.out.print("希望零件名称修改为：");
+							PNAME = sc.next();
+							pst.setString(1, PNAME);
+							pst.setString(2, PNO);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNAME = ? WHERE WEIGHT = ?");
+							System.out.print("零件质量定位：");
+							WEIGHT = sc.nextFloat();
+							System.out.print("希望零件名称修改为：");
+							PNAME = sc.next();
+							pst.setString(1, PNAME);
+							pst.setFloat(2, WEIGHT);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 3)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNAME = ? WHERE COLOR = ?");
+							System.out.print("零件颜色定位：");
+							COLOR = sc.next();
+							System.out.print("希望零件名称修改为：");
+							PNAME = sc.next();
+							pst.setString(1, PNAME);
+							pst.setString(2, COLOR);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 4)
+						{
+							pst = connect.prepareStatement("UPDATE P SET PNAME = ? WHERE CITY = ?");
+							System.out.print("零件所属地定位：");
+							CITY = sc.next();
+							System.out.print("希望零件名称修改为：");
+							PNAME = sc.next();
+							pst.setString(1, PNAME);
+							pst.setString(2, CITY);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
 					}
 					if(m == 3)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.零件编号  2.零件名称  3.零件颜色  4.零件所属地  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE P SET WEIGHT = ? WHERE PNO = ?");
+							System.out.print("零件编号定位：");
+							PNO = sc.next();
+							System.out.print("希望零件质量修改为：");
+							WEIGHT = sc.nextFloat();
+							pst.setFloat(1, WEIGHT);
+							pst.setString(2, PNO);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE P SET WEIGHT = ? WHERE PNO = ?");
+							System.out.print("零件名称定位：");
+							PNAME = sc.next();
+							System.out.print("希望零件质量修改为：");
+							WEIGHT = sc.nextFloat();
+							pst.setFloat(1, WEIGHT);
+							pst.setString(2, PNAME);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 3)
+						{
+							pst = connect.prepareStatement("UPDATE P SET WEIGHT = ? WHERE PNO = ?");
+							System.out.print("零件名称定位：");
+							PNAME = sc.next();
+							System.out.print("希望零件质量修改为：");
+							WEIGHT = sc.nextFloat();
+							pst.setFloat(1, WEIGHT);
+							pst.setString(2, PNAME);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 4)
+						{
+							pst = connect.prepareStatement("UPDATE P SET WEIGHT = ? WHERE PNO = ?");
+							System.out.print("零件名称定位：");
+							PNAME = sc.next();
+							System.out.print("希望零件质量修改为：");
+							WEIGHT = sc.nextFloat();
+							pst.setFloat(1, WEIGHT);
+							pst.setString(2, PNAME);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
 					}
 					if(m == 4)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.零件编号  2.零件名称  3.零件质量  4.零件所属地  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE P SET COLOR = ? WHERE PNO = ?");
+							System.out.print("零件编号定位：");
+							PNO = sc.next();
+							System.out.print("希望零件颜色修改为：");
+							COLOR = sc.next();
+							pst.setString(1, COLOR);
+							pst.setString(2, PNO);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE P SET COLOR = ? WHERE PNAME = ?");
+							System.out.print("零件编号定位：");
+							PNAME = sc.next();
+							System.out.print("希望零件颜色修改为：");
+							COLOR = sc.next();
+							pst.setString(1, COLOR);
+							pst.setString(2, PNAME);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 3)
+						{
+							pst = connect.prepareStatement("UPDATE P SET COLOR = ? WHERE WEIGHT = ?");
+							System.out.print("零件质量定位：");
+							WEIGHT = sc.nextFloat();
+							System.out.print("希望零件颜色修改为：");
+							COLOR = sc.next();
+							pst.setString(1, COLOR);
+							pst.setFloat(2, WEIGHT);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 4)
+						{
+							pst = connect.prepareStatement("UPDATE P SET COLOR = ? WHERE CITY = ?");
+							System.out.print("零件所属地定位：");
+							CITY = sc.next();
+							System.out.print("希望零件颜色修改为：");
+							COLOR = sc.next();
+							pst.setString(1, COLOR);
+							pst.setString(2, CITY);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
 					}
 					if(m == 5)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.零件编号  2.零件名称  3.零件质量  4.零件颜色  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE P SET CITY = ? WHERE PNO = ?");
+							System.out.print("零件编号定位：");
+							PNO = sc.next();
+							System.out.print("希望零件所属地修改为：");
+							CITY = sc.next();
+							pst.setString(1, CITY);
+							pst.setString(2, PNO);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE P SET CITY = ? WHERE PNAME = ?");
+							System.out.print("零件名称定位：");
+							PNAME = sc.next();
+							System.out.print("希望零件所属地修改为：");
+							CITY = sc.next();
+							pst.setString(1, CITY);
+							pst.setString(2, PNAME);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 3)
+						{
+							pst = connect.prepareStatement("UPDATE P SET CITY = ? WHERE WEIGHT = ?");
+							System.out.print("零件质量定位：");
+							WEIGHT = sc.nextFloat();
+							System.out.print("希望零件所属地修改为：");
+							CITY = sc.next();
+							pst.setString(1, CITY);
+							pst.setFloat(2, WEIGHT);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
+						if(b == 4)
+						{
+							pst = connect.prepareStatement("UPDATE P SET CITY = ? WHERE COLOR = ?");
+							System.out.print("零件颜色定位：");
+							COLOR = sc.next();
+							System.out.print("希望零件所属地修改为：");
+							CITY = sc.next();
+							pst.setString(1, CITY);
+							pst.setString(2, COLOR);
+							pst.executeUpdate();
+							System.out.println("修改成功，修改后表如下：");
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM P");
+							System.out.println("---------------------------");
+							System.out.println("PNO  "+"PNAME  "+"WEIGHT "+"COLOR "+ "CITY");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("PNO")+"   ");
+							    System.out.print(result.getString("PNAME")+"     ");
+							    System.out.print(result.getFloat("WEIGHT")+"    ");
+							    System.out.print(result.getString("COLOR")+"     ");
+							    System.out.println(result.getString("CITY"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							pst.close();
+							break;
+						}
 					}
 				}
 				catch(Exception e)
@@ -909,21 +1520,188 @@ public class sp {
 				try
 				{
 					int m = 0;
-					String PNO,PNAME,COLOR,CITY;
-					float WEIGHT;
+					String SNO,SNAME,CITY;
 					System.out.println("请输入要更改的列  1.供应商编号  2.供应商名称  3.供应商所属城市");
 					m = sc.nextInt();
 					if(m == 1)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.供应商名称  2.供应商所属城市  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE S SET SNO = ? WHERE SNAME = ?");
+							System.out.print("供应商名称定位：");
+							SNAME = sc.next();
+							System.out.print("希望供应商编号修改为：");
+							SNO = sc.next();
+							pst.setString(1, SNO);
+							pst.setString(2, SNAME);
+							pst.executeUpdate();
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM S");
+							System.out.println("---------------------------");
+							System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("SNO")+"   ");
+							    System.out.print(result.getString("SNAME")+"     ");
+							    System.out.print(result.getString("CITY")+"    ");
+							    System.out.println(result.getString("STATUS"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE S SET SNO = ? WHERE CITY = ?");
+							System.out.print("供应商所属城市定位：");
+							CITY = sc.next();
+							System.out.print("希望供应商编号修改为：");
+							SNO = sc.next();
+							pst.setString(1, SNO);
+							pst.setString(2, CITY);
+							pst.executeUpdate();
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM S");
+							System.out.println("---------------------------");
+							System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("SNO")+"   ");
+							    System.out.print(result.getString("SNAME")+"     ");
+							    System.out.print(result.getString("CITY")+"    ");
+							    System.out.println(result.getString("STATUS"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
 					}
 					if(m == 2)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.供应商编号  2.供应商所属城市  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE S SET SNAME = ? WHERE SNO = ?");
+							System.out.print("供应商编号定位：");
+							SNO = sc.next();
+							System.out.print("希望供应商名称修改为：");
+							SNAME = sc.next();
+							pst.setString(1, SNAME);
+							pst.setString(2, SNO);
+							pst.executeUpdate();
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM S");
+							System.out.println("---------------------------");
+							System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("SNO")+"   ");
+							    System.out.print(result.getString("SNAME")+"     ");
+							    System.out.print(result.getString("CITY")+"    ");
+							    System.out.println(result.getString("STATUS"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE S SET SNAME = ? WHERE CITY = ?");
+							System.out.print("供应商所属城市定位：");
+							SNAME = sc.next();
+							System.out.print("希望供应商名称修改为：");
+							SNAME = sc.next();
+							pst.setString(1, SNAME);
+							pst.setString(2, CITY);
+							pst.executeUpdate();
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM S");
+							System.out.println("---------------------------");
+							System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("SNO")+"   ");
+							    System.out.print(result.getString("SNAME")+"     ");
+							    System.out.print(result.getString("CITY")+"    ");
+							    System.out.println(result.getString("STATUS"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
 					}
 					if(m == 3)
 					{
-						
+						int b = 0;
+						System.out.println("根据  1.供应商编号  2.供应商名称  进行修改");
+						b = sc.nextInt();
+						if(b == 1)
+						{
+							pst = connect.prepareStatement("UPDATE S SET CITY = ? WHERE SNO = ?");
+							System.out.print("供应商编号定位：");
+							SNO = sc.next();
+							System.out.print("希望供应商所属城市修改为：");
+							CITY = sc.next();
+							pst.setString(1, CITY);
+							pst.setString(2, SNO);
+							pst.executeUpdate();
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM S");
+							System.out.println("---------------------------");
+							System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("SNO")+"   ");
+							    System.out.print(result.getString("SNAME")+"     ");
+							    System.out.print(result.getString("CITY")+"    ");
+							    System.out.println(result.getString("STATUS"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
+						if(b == 2)
+						{
+							pst = connect.prepareStatement("UPDATE S SET CITY = ? WHERE SNAME = ?");
+							System.out.print("供应商名称定位：");
+							SNAME = sc.next();
+							System.out.print("希望供应商所属城市修改为：");
+							CITY = sc.next();
+							pst.setString(1, CITY);
+							pst.setString(2, SNAME);
+							pst.executeUpdate();
+							Statement statement = connect.createStatement();
+							ResultSet result = statement.executeQuery("SELECT * FROM S");
+							System.out.println("---------------------------");
+							System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+							System.out.println("---------------------------");
+							while(result.next())
+							{
+							    System.out.print(result.getString("SNO")+"   ");
+							    System.out.print(result.getString("SNAME")+"     ");
+							    System.out.print(result.getString("CITY")+"    ");
+							    System.out.println(result.getString("STATUS"));
+							}
+							System.out.println("---------------------------");
+							result.close();
+							Operate();
+							break;
+						}
 					}
 				}
 				catch(Exception e)
