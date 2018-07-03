@@ -8,7 +8,7 @@ public class mainInterface
 	{
 		// TODO 自动生成的方法存根
 		sp sp1 = new sp();
-		sp1.login();
+		sp1.UI();
 	}
 }
 
