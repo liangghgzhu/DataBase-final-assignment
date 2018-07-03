@@ -13,28 +13,28 @@ public class sp {
 	private static String password;
 	public static void main(String args[])
 	{
-		//略略略
+		
 	}
-	public void login()
+	public void UI()
 	{
 		try{
 			Class.forName("com.mysql.jdbc.Driver");
-			System.out.println("成功连接数据库");
+			System.out.println("成功加载数据库");
 		}
 		catch(Exception e){
-			System.out.println("连接数据库失败");
+			System.out.println("加载数据库失败。");
 			e.printStackTrace();
 		}
 		try{
 			int n = 0;
-			System.out.println("请输入序号进行操作：1.登录  2.注册 ");
+			System.out.print("请输入序号进行操作：1.登录  2.注册 ");
 			if(sc.hasNext())
 			{
 				n = sc.nextInt();
 				while(n != 1 && n != 2)
 				{
 					System.out.println("无效数字，请重新输入。");
-					System.out.println("请输入序号进行操作：1.登录  2.注册");
+					System.out.print("请输入序号进行操作：1.登录  2.注册");
 					n = sc.nextInt();
 				}
 				switch(n)
@@ -55,7 +55,7 @@ public class sp {
 			}
 		}
 		catch(Exception e){
-			System.out.println("Error connecting MySQL Server.");
+			System.out.println("连接数据库失败。");
 			e.printStackTrace();
 		}
 	}
@@ -78,7 +78,7 @@ public class sp {
 			}
 			else
 			{
-				System.out.println("登录失败，账号或密码错误");
+				System.out.println("登录失败，账号或密码错误。");
 				SignIn();
 			}
 			result.close();
@@ -86,7 +86,7 @@ public class sp {
 			pst.close();
 		}
 		catch(Exception e){
-			System.out.println("登录失败");
+			System.out.println("登录失败。");
 		}
 	}
 	public void SignUp()throws SQLException
@@ -121,14 +121,14 @@ public class sp {
 		}
 		catch(Exception e)
 		{
-			System.out.println("注册失败");
+			System.out.println("注册失败。");
 		}
 	}
 	public void Operate() throws SQLException
 	{
 		try
 		{
-			System.out.println("输入想要进行的操作：1.增加数据  2.删除数据  3.查找数据 4.修改数据 5.退出登录");
+			System.out.println("输入想要进行的操作： 1.增加数据   2.删除数据   3.查找数据  4.修改数据  5.退出登录");
 			int n = 0;
 			n = sc.nextInt();
 			switch(n)
@@ -137,7 +137,7 @@ public class sp {
 			case 2:deleteData();break;
 			case 3:searchData();break;
 			case 4:updateData();break;
-			case 5:login();break;
+			case 5:UI();break;
 			default:
 			{
 				System.out.println("无效数字，请重新输入。");
@@ -157,7 +157,7 @@ public class sp {
 		try
 		{
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
-			System.out.println("请输入想添加数据的表格：1.零件表 2.供应商表 3.供应货表  4.返回上一层");
+			System.out.println("请输入想添加数据的表格：1.零件表  2.供应商表  3.供应货表   4.返回上一层");
 			int n = 0;
 			n = sc.nextInt();
 			PreparedStatement pst;
@@ -214,7 +214,7 @@ public class sp {
 				catch(Exception e)
 				{
 					e.printStackTrace();
-					System.out.println("添加失败（1）");
+					System.out.println("添加失败（1）。");
 					Operate();
 				}
 			}
@@ -301,7 +301,7 @@ public class sp {
 				catch(Exception e)
 				{
 					e.printStackTrace();
-					System.out.println("添加失败（3）");
+					System.out.println("添加失败（3）。");
 					Operate();
 				}
 			}
@@ -340,7 +340,7 @@ public class sp {
 				try
 				{
 					int m = 0;
-					System.out.println("请输入想要操作的列  1.零件编号  2.零件名称  3.零件重量  4.零件颜色  5.零件所属城市 ：");
+					System.out.println("请输入想要操作的列  1.零件编号  2.零件名称  3.零件重量  4.零件颜色  5.零件所属城市 ");
 					m = sc.nextInt();
 					if(m == 1)
 					{
@@ -417,13 +417,13 @@ public class sp {
 				try
 				{
 					int m = 0;
-					System.out.println("请输入想要操作的列  1.供应商编号  2.供应商名  3.供应商所属城市：");
+					System.out.println("请输入想要操作的列  1.供应商编号  2.供应商名  3.供应商所属城市");
 					m = sc.nextInt();
 					if(m == 1)
 					{
 						pst = connect.prepareStatement("DELETE FROM S WHERE SNO = ?");
 						String n1;
-						System.out.print("SNO = ");
+						System.out.print("供应商编号为：");
 						n1 = sc.next();
 						pst.setString(1, n1);
 						pst.executeUpdate();
@@ -432,7 +432,7 @@ public class sp {
 					{
 						pst = connect.prepareStatement("DELETE FROM S WHERE SNAME = ?");
 						String n1;
-						System.out.print("SNAME = ");
+						System.out.print("供应商名称为：");
 						n1 = sc.next();
 						pst.setString(1, n1);
 						pst.executeUpdate();
@@ -441,7 +441,7 @@ public class sp {
 					{
 						pst = connect.prepareStatement("DELETE FROM S WHERE CITY = ?");
 						String n1;
-						System.out.print("CITY = ");
+						System.out.print("供应商所属城市为：");
 						n1 = sc.next();
 						pst.setString(1, n1);
 						pst.executeUpdate();
@@ -467,7 +467,7 @@ public class sp {
 				catch(Exception e)
 				{
 					e.printStackTrace();
-					System.out.println("删除失败（2）");
+					System.out.println("删除失败（2）。");
 				}
 			}
 			case 3:
@@ -475,7 +475,7 @@ public class sp {
 				try
 				{
 					int m = 0;
-					System.out.println("请输入想要操作的列  1.供应商编号  2.零件编号  3.零件数量 ： ");
+					System.out.print("请输入想要操作的列  1.供应商编号  2.零件编号  3.零件数量  ");
 					m = sc.nextInt();
 					if(m == 1)
 					{
@@ -524,7 +524,7 @@ public class sp {
 				catch(Exception e)
 				{
 					e.printStackTrace();
-					System.out.println("删除失败（3）");
+					System.out.println("删除失败（3）。");
 				}
 			}
 			case 4:
@@ -548,7 +548,7 @@ public class sp {
 		{
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
 			int n = 0;
-			System.out.println("请输入想要查看的表格  1.零件表  2.供应商表  3.供应货物表  ：");
+			System.out.println("请输入想要查看的表格  1.零件表  2.供应商表  3.供应货物表");
 			n = sc.nextInt();
 			switch(n)
 			{
@@ -662,7 +662,7 @@ public class sp {
 			Connection connect = DriverManager.getConnection("jdbc:mysql://localhost:3306/sp1?useSSL=false","root","kuangjunhao29");
 			PreparedStatement pst;
 			int n = 0;
-			System.out.println("请输入想要修改的表  1.供应货物表  2.零件表  3.供应商表  ：");
+			System.out.println("请输入想要修改的表  1.供应货物表  2.零件表  3.供应商表");
 			n = sc.nextInt();
 			while(n != 1 && n != 2 && n != 3)
 			{
@@ -678,19 +678,19 @@ public class sp {
 					int m = 0;
 					String SNO,PNO;
 					float QTY;
-					System.out.println("请输入要更改的列  1.供应商编号  2.零件编号：3.零件数量：");
+					System.out.println("请输入要更改的列  1.供应商编号  2.零件编号：3.零件数量");
 					m = sc.nextInt();
 					if( m == 1)
 					{
 						int b = 0;
-						System.out.println("根据1.零件编号  2.零件数量 进行修改：");
+						System.out.println("根据1.零件编号  2.零件数量 进行修改");
 						b = sc.nextInt();
 						if(b == 1)
 						{
 							pst = connect.prepareStatement("UPDATE SP SET SNO = ? WHERE PNO = ?");
-							System.out.println("零件编号定位：");
+							System.out.print("零件编号定位：");
 							PNO = sc.next();
-							System.out.println("希望供应商编号修改为：");
+							System.out.print("希望供应商编号修改为：");
 							SNO = sc.next();
 							pst.setString(1, SNO);
 							pst.setString(2, PNO);
@@ -715,9 +715,9 @@ public class sp {
 						else
 						{
 							pst = connect.prepareStatement("UPDATE SP SET SNO = ? WHERE QTY = ?");
-							System.out.println("零件数量定位：");
+							System.out.print("零件数量定位：");
 							QTY = sc.nextFloat();
-							System.out.println("希望供应商编号修改为：");
+							System.out.print("希望供应商编号修改为：");
 							SNO = sc.next();
 							pst.setString(1, SNO);
 							pst.setFloat(2, QTY);
@@ -743,14 +743,14 @@ public class sp {
 					if(m == 2)
 					{
 						int b = 0;
-						System.out.println("根据  1.供应商编号  2.零件数量  进行修改：");
+						System.out.println("根据  1.供应商编号  2.零件数量  进行修改");
 						b = sc.nextInt();
 						if(b == 1)
 						{
 							pst = connect.prepareStatement("UPDATE SP SET PNO = ? WHERE SNO = ?");
-							System.out.println("供应商编号定位：");
+							System.out.print("供应商编号定位：");
 							SNO = sc.next();
-							System.out.println("希望零件编号修改为：");
+							System.out.print("希望零件编号修改为：");
 							PNO = sc.next();
 							pst.setString(1, PNO);
 							pst.setString(2, SNO);
@@ -775,9 +775,9 @@ public class sp {
 						else
 						{
 							pst = connect.prepareStatement("UPDATE SP SET PNO = ? WHERE QTY = ?");
-							System.out.println("零件数量定位：");
+							System.out.print("零件数量定位：");
 							QTY = sc.nextFloat();
-							System.out.println("希望零件编号修改为：");
+							System.out.print("希望零件编号修改为：");
 							PNO = sc.next();
 							pst.setString(1, PNO);
 							pst.setFloat(2, QTY);
@@ -803,14 +803,14 @@ public class sp {
 					if(m == 3)
 					{
 						int b = 0;
-						System.out.println("根据  1.供应商编号  2.零件编号  进行修改：");
+						System.out.println("根据  1.供应商编号  2.零件编号  进行修改");
 						b = sc.nextInt();
 						if(b == 1)
 						{
 							pst = connect.prepareStatement("UPDATE SP SET QTY = ? WHERE SNO = ?");
-							System.out.println("供应商编号定位：");
+							System.out.print("供应商编号定位：");
 							SNO = sc.next();
-							System.out.println("希望零件数量修改为：");
+							System.out.print("希望零件数量修改为：");
 							QTY = sc.nextFloat();
 							pst.setFloat(1, QTY);
 							pst.setString(2, SNO);
@@ -1619,7 +1619,7 @@ public class sp {
 						{
 							pst = connect.prepareStatement("UPDATE S SET SNAME = ? WHERE CITY = ?");
 							System.out.print("供应商所属城市定位：");
-							SNAME = sc.next();
+							CITY = sc.next();
 							System.out.print("希望供应商名称修改为：");
 							SNAME = sc.next();
 							pst.setString(1, SNAME);
@@ -1628,7 +1628,7 @@ public class sp {
 							Statement statement = connect.createStatement();
 							ResultSet result = statement.executeQuery("SELECT * FROM S");
 							System.out.println("---------------------------");
-							System.out.println("SNO  "+"SNAME  "+"CITY "+"STATUS ");
+							System.out.println("SNO  SNAME  CITY STATUS ");
 							System.out.println("---------------------------");
 							while(result.next())
 							{
